@@ -1,4 +1,4 @@
-// const map = [
+// const livingMap = [
 //     "  WWWWW ",
 //     "WWW   W ",
 //     "WOS B W ",
@@ -10,7 +10,8 @@
 //     "WWWWWWWW"
 //   ];
 
-const map = [
+
+const canonicalMap = [
     "    WWWWW           ",
     "    WWWWW           ",
     "    W   W           ",
@@ -24,7 +25,14 @@ const map = [
     "    W     WWWWWWWWWW",
     "    WWWWWWW         ",
     "    WWWWWWW         "
- ]
+]
+
+const livingMap = [...canonicalMap]; // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
+const player = "S";
+const wall = "W";
+const box = "B";
+const storage = "O";
 
 
 const main = document.querySelector("main");
@@ -43,15 +51,15 @@ function draw(startPos) {
             const newCol = document.createElement("div");
             newCol.classList.add("cell");
 
-            if (cell === "W") {
+            if (cell === wall) {
                 newCol.classList.add("wall");
             } else if (cell === " ") {
                 newCol.classList.add("empty");
-            } else if (cell === "S") {
+            } else if (cell === player) {
                 newCol.id = "start";
-            } else if (cell === "O") {
+            } else if (cell === storage) {
                 newCol.classList.add("storage");
-            } else if (cell === "B") {
+            } else if (cell === box) {
                 newCol.classList.add("box");
             }
 
@@ -68,36 +76,33 @@ document.addEventListener('keydown', (event) => {
     if (keyName == "ArrowRight") {
         reset(main);
 
-        for (let i = 0; i < map.length; i++) {
+        for (let iRow = 0; iRow < livingMap.length; iRow++) {
 
-            if (map[i].includes("S")) {
-                let mapSplit = map[i].split('');
-                let playerPos = map[i].indexOf("S");
-                if (map[i][playerPos + 1] == " ") {
+            if (livingMap[iRow].includes(player)) {
+                let mapSplit = livingMap[iRow].split('');
+                let playerPos = livingMap[iRow].indexOf(player);
+                let nextPlayerPos = playerPos + 1;
+
+                if (livingMap[iRow][nextPlayerPos] == " ") {
                     mapSplit.splice(playerPos, 1);
-                    mapSplit.splice((playerPos + 1), 0, "S");
+                    mapSplit.splice(nextPlayerPos, 0, player);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
+                    livingMap[iRow] = rejoined;
                     
-                } else if (map[i][playerPos + 1] == "O") {
+                } else if (livingMap[iRow][nextPlayerPos] == storage) {
                     mapSplit.splice(playerPos, 1);
-                    mapSplit.splice((playerPos + 1), 1, " ", "S");
+                    mapSplit.splice(nextPlayerPos, 1, " ", player);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
-                } else if (map[i][playerPos + 1] == "B" && map[i][playerPos + 2] !== "W" && map[i][playerPos + 2] !== "B") {
+                    livingMap[iRow] = rejoined;
+                } else if (livingMap[iRow][nextPlayerPos] == box && livingMap[iRow][playerPos + 2] !== wall && livingMap[iRow][playerPos + 2] !== box) {
                     mapSplit.splice(playerPos, 1, " ");
-                    mapSplit.splice((playerPos +1), 2, "S", "B");
+                    mapSplit.splice(nextPlayerPos, 2, player, box);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
+                    livingMap[iRow] = rejoined;
                     
-                } else if(map[i][playerPos+1] == "F"){
+                } else if(livingMap[iRow][nextPlayerPos] == "F"){
                     alert("you win");
                     location.reload();
-                } else {
-                    var newMap = map;
                 }
             }
         }
@@ -105,33 +110,31 @@ document.addEventListener('keydown', (event) => {
     if (keyName == "ArrowLeft") {
         reset(main);
 
-        for (let i = 0; i < map.length; i++) {
+        for (let iRow = 0; iRow < livingMap.length; iRow++) {
 
-            if (map[i].includes("S")) {
-                let mapSplit = map[i].split('');
-                let playerPos = map[i].indexOf("S");
-                if (map[i][playerPos - 1] == " ") {
+            if (livingMap[iRow].includes(player)) {
+                let mapSplit = livingMap[iRow].split('');
+                let playerPos = livingMap[iRow].indexOf(player);
+                let nextPlayerPos = playerPos - 1;
+
+                if (livingMap[iRow][nextPlayerPos] == " ") {
                     mapSplit.splice(playerPos, 1);
-                    mapSplit.splice((playerPos - 1), 0, "S");
+                    mapSplit.splice(nextPlayerPos, 0, player);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
-                } else if (map[i][playerPos - 1] == "O") {
+                    livingMap[iRow] = rejoined;
+
+                } else if (livingMap[iRow][nextPlayerPos] == storage) {
                     mapSplit.splice(playerPos, 1);
-                    mapSplit.splice((playerPos - 1), 1, "S", " ");
+                    mapSplit.splice(nextPlayerPos, 1, player, " ");
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
+                    livingMap[iRow] = rejoined;
                 
-                } else if (map[i][playerPos - 1] == "B" && map[i][playerPos - 2] !== "W" && map[i][playerPos - 2] !== "B") {
+                } else if (livingMap[iRow][nextPlayerPos] == box && livingMap[iRow][playerPos - 2] !== wall && livingMap[iRow][playerPos - 2] !== box) {
                     mapSplit.splice(playerPos, 1,);
-                    mapSplit.splice((playerPos - 2), 2, "B", "S", " ");
+                    mapSplit.splice((playerPos - 2), 2, box, player, " ");
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
-                    var newMap = map;
+                    livingMap[iRow] = rejoined;
                 
-                } else {
-                    var newMap = map;
                 }
             }
         }
@@ -140,50 +143,48 @@ document.addEventListener('keydown', (event) => {
     if (keyName == "ArrowUp") {
         reset(main);
 
-        for (let i = 0; i < map.length; i++) {
+        for (let iRow = 0; iRow < livingMap.length; iRow++) {
 
-            if (map[i].includes("S")) {
-                let mapSplit = map[i].split('');
-                let rowAbove = map[i-1].split('');
-                let rowAbove2 = map[i-2].split('');
-                let playerPos = map[i].indexOf("S");
+            if (livingMap[iRow].includes(player)) {
+                let mapSplit = livingMap[iRow].split('');
+                let rowAbove = livingMap[iRow-1].split('');
+                let rowAbove2 = livingMap[iRow-2].split('');
+                let playerPos = livingMap[iRow].indexOf(player);
+                let nextPlayerPos = playerPos;
+                let nextRow = iRow - 1;
 
-                if (map[i-1][playerPos] == " ") {
+                if (livingMap[nextRow][nextPlayerPos] == " ") {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowAbove.splice(playerPos, 1, "S");
+                    rowAbove.splice(playerPos, 1, player);
 
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2 = rowAbove.join('');
-                    map[i-1] = rejoined2;
+                    livingMap[nextRow] = rejoined2;
 
-                    var newMap = map;
-                } else if (map[i-1][playerPos] == "O") {
+                    var newMap = livingMap;
+                } else if (livingMap[nextRow][nextPlayerPos] == storage) {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowAbove.splice(playerPos, 1, "S");
+                    rowAbove.splice(playerPos, 1, player);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2=rowAbove.join('');
-                    map[i-1] = rejoined2;
-                    var newMap = map;
+                    livingMap[nextRow] = rejoined2;
                 
-                }  else if (map[i-1][playerPos] == "B" && map[i-2][playerPos] !== "W" && map[i-2][playerPos] !== "B") {
+                }  else if (livingMap[nextRow][nextPlayerPos] == box && livingMap[iRow-2][nextPlayerPos] !== wall && livingMap[iRow-2][nextPlayerPos] !== box) {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowAbove.splice(playerPos, 1, "S");
-                    rowAbove2.splice(playerPos, 1, "B");
+                    rowAbove.splice(playerPos, 1, player);
+                    rowAbove2.splice(playerPos, 1, box);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2=rowAbove.join('');
                     let rejoined3=rowAbove2.join('');
-                    map[i-1] = rejoined2;
-                    map[i-2] = rejoined3;
-                    var newMap = map;
+                    livingMap[nextRow] = rejoined2;
+                    livingMap[iRow - 2] = rejoined3;
                 
-                } else {
-                    var newMap = map;
                 }
             }
         }
@@ -191,61 +192,58 @@ document.addEventListener('keydown', (event) => {
     }
     if (keyName == "ArrowDown") {
         reset(main);
-        label:
-        for (let i = 0; i < map.length; i++) {
 
-            if (map[i].includes("S")) {
-                let mapSplit = map[i].split('');
-                let rowBelow = map[i+1].split('');
-                let rowBelow2 = map[i+2].split('');
-                let playerPos = map[i].indexOf("S");
+        for (let iRow = 0; iRow < livingMap.length; iRow++) {
+
+            if (livingMap[iRow].includes(player)) {
+                let mapSplit = livingMap[iRow].split('');
+                let rowBelow = livingMap[iRow+1].split('');
+                let rowBelow2 = livingMap[iRow+2].split('');
+                let playerPos = livingMap[iRow].indexOf(player);
                 
 
-                if (map[i+1][playerPos] == " ") {
+                if (livingMap[iRow+1][playerPos] == " ") {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowBelow.splice(playerPos, 1, "S");
+                    rowBelow.splice(playerPos, 1, player);
 
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2 = rowBelow.join('');
-                    map[i+1] = rejoined2;
+                    livingMap[iRow+1] = rejoined2;
 
-                    var newMap = map;
-                } else if (map[i+1][playerPos] == "O") {
+                    var newMap = livingMap;
+                } else if (livingMap[iRow+1][playerPos] == storage) {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowBelow.splice(playerPos, 1, "S");
+                    rowBelow.splice(playerPos, 1, player);
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2=rowBelow.join('');
-                    map[i+1] = rejoined2;
-                    var newMap = map;
+                    livingMap[iRow+1] = rejoined2;
                 
-                } else if (map[i+1][playerPos] == "B" && map[i+2][playerPos] !== "W" && map[i+2][playerPos] !== "B") {
+                } else if (livingMap[iRow+1][playerPos] == box && livingMap[iRow+2][playerPos] !== wall && livingMap[iRow+2][playerPos] !== box) {
                     mapSplit.splice(playerPos, 1, " ");
-                    rowBelow.splice(playerPos, 1, "S");
-                    rowBelow2.splice(playerPos, 1, "B");
+                    rowBelow.splice(playerPos, 1, player);
+                    rowBelow2.splice(playerPos, 1, box);
                     
                     let rejoined = mapSplit.join('');
-                    map[i] = rejoined;
+                    livingMap[iRow] = rejoined;
 
                     let rejoined2=rowBelow.join('');
                     let rejoined3=rowBelow2.join('');
-                    map[i+1] = rejoined2;
-                    map[i+2] = rejoined3;
+                    livingMap[iRow+1] = rejoined2;
+                    livingMap[iRow+2] = rejoined3;
                     
-                    var newMap = map;
-                
-                }else {
-                    var newMap = map;
-                } break label;
+                }
+
+                break;
             }
         }
 
     }
     
-    draw(newMap);
+    draw(livingMap);
 
 });
 
@@ -255,4 +253,4 @@ function reset(destination) {
     }
 }
 
-draw(map);
+draw(livingMap);
