@@ -1,0 +1,43 @@
+html {}
+
+body {}
+
+main {
+    display: flex;
+    width: 420px;
+    height: 300px;
+    flex-direction: column;
+    margin: auto;
+}
+
+.flexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+}
+
+.wall {
+    background-color: black;
+}
+
+.empty {
+}
+
+#start {
+    background-color: blue;
+}
+
+.storage {
+    background-color:tan;
+}
+
+.box {
+    background-color: brown;
+    width: 18px;
+    height: 18px;
+    border: 1px solid black;
+}
