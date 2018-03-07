@@ -6,8 +6,8 @@ body {
 
 main {
     display: flex;
-    width: 420px;
-    height: 300px;
+    width: 900px;
+    height: 600px;
     flex-direction: column;
     margin: auto;
 }
@@ -23,13 +23,13 @@ main {
 }
 
 .cell {
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
 }
 
 .wall {
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs1KFYhuTjhwAjxAsBATZkXzEJo_dWdz1WbL4srz0cOVpLWJ3o");
-    background-size: 20px;
+    background-size: 50px;
 }
 
 .empty {
@@ -37,7 +37,7 @@ main {
 
 #start {
     background-image: url("https://media1.giphy.com/media/nhc8d5HizRA3K/200w.gif");
-    background-size: 20px;
+    background-size: 50px;
     background-repeat: no-repeat;
 }
 
@@ -48,6 +48,6 @@ main {
 .box {
     background-image: url("https://media3.giphy.com/media/7824ahBLwt5Nm/200w.gif");
 
-    background-size: 20px;
+    background-size: 50px;
     background-repeat: no-repeat;
 }
