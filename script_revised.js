@@ -1,4 +1,4 @@
-// const map = [
+// const livingMap = [
 //     "  WWWWW ",
 //     "WWW   W ",
 //     "WOS B W ",
@@ -37,7 +37,10 @@ const storage = "O";
 
 const main = document.querySelector("main");
 
+
 function draw(startPos) {
+
+    
 
 
     for (let i = 0; i < startPos.length; i++) {
@@ -260,7 +263,7 @@ document.addEventListener('keydown', (event) => {
                 }
 
             }
-        }
+        } 
     }
 
     if (livingMap) draw(livingMap);

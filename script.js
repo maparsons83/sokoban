@@ -39,6 +39,10 @@ const main = document.querySelector("main");
 
 function draw(startPos) {
 
+    if (livingMap[7][16] === box && livingMap[7][17] === box && livingMap[8][16] === box && livingMap[8][17] === box && livingMap[9][16] === box && livingMap[9][17] === box) {
+        alert ("You Win!")
+    }
+
 
     for (let i = 0; i < startPos.length; i++) {
         var newRow = document.createElement("div");

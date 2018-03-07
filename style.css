@@ -1,6 +1,8 @@
 html {}
 
-body {}
+body {
+    background-color: lightslategray;
+}
 
 main {
     display: flex;
@@ -8,6 +10,11 @@ main {
     height: 300px;
     flex-direction: column;
     margin: auto;
+}
+
+#title {
+    font-size: 20pt;
+    color: white;
 }
 
 .flexbox {
@@ -21,14 +28,17 @@ main {
 }
 
 .wall {
-    background-color: black;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs1KFYhuTjhwAjxAsBATZkXzEJo_dWdz1WbL4srz0cOVpLWJ3o");
+    background-size: 20px;
 }
 
 .empty {
 }
 
 #start {
-    background-color: blue;
+    background-image: url("https://media1.giphy.com/media/nhc8d5HizRA3K/200w.gif");
+    background-size: 20px;
+    background-repeat: no-repeat;
 }
 
 .storage {
@@ -36,8 +46,8 @@ main {
 }
 
 .box {
-    background-color: brown;
-    width: 18px;
-    height: 18px;
-    border: 1px solid black;
+    background-image: url("https://media3.giphy.com/media/7824ahBLwt5Nm/200w.gif");
+
+    background-size: 20px;
+    background-repeat: no-repeat;
 }
